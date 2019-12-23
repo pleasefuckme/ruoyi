@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.VideoDocMapper">
+    
+    <resultMap type="VideoDoc" id="VideoDocResult">
+        <result property="videoDocId"    column="video_doc_id"    />
+        <result property="pointTreeId"    column="point_tree_id"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="fileUpload"    column="file_upload"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectVideoDocVo">
+        select video_doc_id, point_tree_id, file_type, file_upload, remark from video_doc
+    </sql>
+
+    <select id="selectVideoDocList" parameterType="VideoDoc" resultMap="VideoDocResult">
+        <include refid="selectVideoDocVo"/>
+        <where>  
+            <if test="pointTreeId != null and pointTreeId != '' "> and point_tree_id = #{pointTreeId}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="fileUpload != null  and fileUpload != ''"> and file_upload = #{fileUpload}</if>
+        </where>
+    </select>
+    
+    <select id="selectVideoDocById" parameterType="Long" resultMap="VideoDocResult">
+        <include refid="selectVideoDocVo"/>
+        where video_doc_id = #{videoDocId}
+    </select>
+        
+    <insert id="insertVideoDoc" parameterType="VideoDoc">
+        insert into video_doc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="videoDocId != null ">video_doc_id,</if>
+            <if test="pointTreeId != null ">point_tree_id,</if>
+            <if test="fileType != null  and fileType != ''">file_type,</if>
+            <if test="fileUpload != null  and fileUpload != ''">file_upload,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="videoDocId != null ">#{videoDocId},</if>
+            <if test="pointTreeId != null ">#{pointTreeId},</if>
+            <if test="fileType != null  and fileType != ''">#{fileType},</if>
+            <if test="fileUpload != null  and fileUpload != ''">#{fileUpload},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVideoDoc" parameterType="VideoDoc">
+        update video_doc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pointTreeId != null ">point_tree_id = #{pointTreeId},</if>
+            <if test="fileType != null  and fileType != ''">file_type = #{fileType},</if>
+            <if test="fileUpload != null  and fileUpload != ''">file_upload = #{fileUpload},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where video_doc_id = #{videoDocId}
+    </update>
+
+    <delete id="deleteVideoDocById" parameterType="Long">
+        delete from video_doc where video_doc_id = #{videoDocId}
+    </delete>
+
+    <delete id="deleteVideoDocByIds" parameterType="String">
+        delete from video_doc where video_doc_id in 
+        <foreach item="videoDocId" collection="array" open="(" separator="," close=")">
+            #{videoDocId}
+        </foreach>
+    </delete>
+    
+</mapper>

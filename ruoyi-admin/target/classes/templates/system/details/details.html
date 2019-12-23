@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('点位详情列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+<!--                            <li>-->
+<!--                                <p>点位树id：</p>-->
+<!--                                <select name="pointTreeId" th:with="type=${@dict.getType('')}">-->
+<!--                                    <option value="">所有</option>-->
+<!--                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+<!--                                </select>-->
+<!--                            </li>-->
+                            <li th:if="${not #lists.isEmpty(pointTree2List)}">
+                                <p>点位树：</p>
+                                <select name="pointTreeId">
+                                    <option value="">所有</option>
+                                    <option th:each="pointTree2 : ${pointTree2List}" th:text="${pointTree2.pointName}" th:value="${pointTree2.pointTreeId}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>点位：</p>
+                                <input type="text" name="point"/>
+                            </li>
+                            <li>
+                                <p>井盖尺寸：</p>
+                                <input type="text" name="capSize"/>
+                            </li>
+                            <li>
+                                <p>图上点号：</p>
+                                <input type="text" name="imgNum"/>
+                            </li>
+                            <li>
+                                <p>井盖材质：</p>
+                                <input type="text" name="capMaterial"/>
+                            </li>
+                            <li>
+                                <p>图幅号：</p>
+                                <input type="text" name="sheetNum"/>
+                            </li>
+                            <li>
+                                <p>井材质：</p>
+                                <input type="text" name="wellMaterial"/>
+                            </li>
+                            <li>
+                                <p>特征：</p>
+                                <input type="text" name="feature"/>
+                            </li>
+                            <li>
+                                <p>井深：</p>
+                                <input type="text" name="wellDepth"/>
+                            </li>
+                            <li>
+                                <p>附属物：</p>
+                                <input type="text" name="appendages"/>
+                            </li>
+                            <li>
+                                <p>井尺寸：</p>
+                                <input type="text" name="wellSize"/>
+                            </li>
+                            <li>
+                                <p>地面高度：</p>
+                                <input type="text" name="groundHeight"/>
+                            </li>
+                            <li>
+                                <p>所在街道：</p>
+                                <input type="text" name="street"/>
+                            </li>
+                            <li>
+                                <p>要素编码：</p>
+                                <input type="text" name="elementCode"/>
+                            </li>
+                            <li>
+                                <p>埋没年代：</p>
+                                <input type="text" name="lostYear"/>
+                            </li>
+                            <li>
+                                <p>x坐标：</p>
+                                <input type="text" name="xIntercept"/>
+                            </li>
+                            <li>
+                                <p>y坐标：</p>
+                                <input type="text" name="yIntercept"/>
+                            </li>
+                            <li class="select-time">
+                                <p>探测日期：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginProbeDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endProbeDate]"/>
+                            </li>
+                            <li>
+                                <p>符号角度：</p>
+                                <input type="text" name="symbolicAngle"/>
+                            </li>
+                            <li>
+                                <p>探测单位：</p>
+                                <input type="text" name="probeUnit"/>
+                            </li>
+                            <li>
+                                <p>井底深：</p>
+                                <input type="text" name="wellBottomDepth"/>
+                            </li>
+                            <li>
+                                <p>监测单位：</p>
+                                <input type="text" name="monitoringUnit"/>
+                            </li>
+                            <li>
+                                <p>偏心井位：</p>
+                                <input type="text" name="deviateCenterWellLocation"/>
+                            </li>
+                            <li>
+                                <p>状态：</p>
+                                <input type="text" name="state"/>
+                            </li>
+                            <li>
+                                <p>井盖形状：</p>
+                                <input type="text" name="capShape"/>
+                            </li>
+                            <li>
+                                <p>备注：</p>
+                                <input type="text" name="remarks"/>
+                            </li>
+                            <li>
+                                <p>设计图：</p>
+                                <input type="text" name="designImg"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:details:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:details:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:details:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:details:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:details:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:details:remove')}]];
+        var prefix = ctx + "system/details";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "点位详情",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'pointDetailsId', 
+                    title : 'id',
+                    visible: false
+                },
+                {
+                    field : 'pointName',
+                    title : '点位树'
+                },
+                {
+                    field : 'point',
+                    title : '点位'
+                },
+                {
+                    field : 'capSize', 
+                    title : '井盖尺寸'
+                },
+                {
+                    field : 'imgNum', 
+                    title : '图上点号'
+                },
+                {
+                    field : 'capMaterial', 
+                    title : '井盖材质'
+                },
+                {
+                    field : 'sheetNum', 
+                    title : '图幅号'
+                },
+                {
+                    field : 'wellMaterial', 
+                    title : '井材质'
+                },
+                {
+                    field : 'feature', 
+                    title : '特征'
+                },
+                {
+                    field : 'wellDepth', 
+                    title : '井深'
+                },
+                {
+                    field : 'appendages', 
+                    title : '附属物'
+                },
+                {
+                    field : 'wellSize', 
+                    title : '井尺寸'
+                },
+                {
+                    field : 'groundHeight', 
+                    title : '地面高度'
+                },
+                {
+                    field : 'street', 
+                    title : '所在街道'
+                },
+                {
+                    field : 'elementCode', 
+                    title : '要素编码'
+                },
+                {
+                    field : 'lostYear', 
+                    title : '埋没年代'
+                },
+                {
+                    field : 'xIntercept', 
+                    title : 'x坐标'
+                },
+                {
+                    field : 'yIntercept', 
+                    title : 'y坐标'
+                },
+                {
+                    field : 'probeDate', 
+                    title : '探测日期'
+                },
+                {
+                    field : 'symbolicAngle', 
+                    title : '符号角度'
+                },
+                {
+                    field : 'probeUnit', 
+                    title : '探测单位'
+                },
+                {
+                    field : 'wellBottomDepth', 
+                    title : '井底深'
+                },
+                {
+                    field : 'monitoringUnit', 
+                    title : '监测单位'
+                },
+                {
+                    field : 'deviateCenterWellLocation', 
+                    title : '偏心井位'
+                },
+                {
+                    field : 'state', 
+                    title : '状态'
+                },
+                {
+                    field : 'capShape', 
+                    title : '井盖形状'
+                },
+                {
+                    field : 'remarks', 
+                    title : '备注'
+                },
+                {
+                    field : 'designImg', 
+                    title : '设计图'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.pointDetailsId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.pointDetailsId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

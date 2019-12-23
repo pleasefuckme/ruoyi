@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HealthMonitorMapper">
+    
+    <resultMap type="HealthMonitor" id="HealthMonitorResult">
+        <result property="healthMonitorId"    column="health_monitor_id"    />
+        <result property="pointTreeId"    column="point_tree_id"    />
+        <result property="tubeDiameter"    column="tube_diameter"    />
+        <result property="tubeLength"    column="tube_length"    />
+        <result property="tubeType"    column="tube_type"    />
+        <result property="inspect"    column="inspect"    />
+        <result property="crawlingLength"    column="crawling_length"    />
+        <result property="tubeMaterial"    column="tube_material"    />
+        <result property="ancillaryFacilities"    column="ancillary_facilities"    />
+        <result property="videoFile"    column="video_file"    />
+        <result property="monitoringSite"    column="monitoring_site"    />
+        <result property="monitoringPersonnel"    column="monitoring_personnel"    />
+        <result property="monitoringDate"    column="monitoring_date"    />
+        <result property="monitoringEquipment"    column="monitoring_equipment"    />
+        <result property="repairIndex"    column="repair_index"    />
+        <result property="ownershipUnit"    column="ownership_unit"    />
+        <result property="maintenanceIndex"    column="maintenance_index"    />
+        <result property="pointValue"    column="point_value"    />
+        <result property="distance"    column="distance"    />
+        <result property="defectNameCode"    column="defect_name_code"    />
+        <result property="grade"    column="grade"    />
+        <result property="defectDescribe"    column="defect_describe"    />
+        <result property="img"    column="img"    />
+    </resultMap>
+
+    <sql id="selectHealthMonitorVo">
+        select health_monitor_id, point_tree_id, tube_diameter, tube_length, tube_type, inspect, crawling_length, tube_material, ancillary_facilities, video_file, monitoring_site, monitoring_personnel, monitoring_date, monitoring_equipment, repair_index, ownership_unit, maintenance_index, point_value, distance, defect_name_code, grade, defect_describe, img from health_monitor
+    </sql>
+
+    <select id="selectHealthMonitorList" parameterType="HealthMonitor" resultMap="HealthMonitorResult">
+        <include refid="selectHealthMonitorVo"/>
+        <where>  
+            <if test="pointTreeId != null "> and point_tree_id = #{pointTreeId}</if>
+            <if test="tubeDiameter != null  and tubeDiameter != ''"> and tube_diameter = #{tubeDiameter}</if>
+            <if test="tubeLength != null "> and tube_length = #{tubeLength}</if>
+            <if test="tubeType != null  and tubeType != ''"> and tube_type = #{tubeType}</if>
+            <if test="inspect != null  and inspect != ''"> and inspect = #{inspect}</if>
+            <if test="crawlingLength != null "> and crawling_length = #{crawlingLength}</if>
+            <if test="tubeMaterial != null  and tubeMaterial != ''"> and tube_material = #{tubeMaterial}</if>
+            <if test="ancillaryFacilities != null  and ancillaryFacilities != ''"> and ancillary_facilities = #{ancillaryFacilities}</if>
+            <if test="videoFile != null  and videoFile != ''"> and video_file = #{videoFile}</if>
+            <if test="monitoringSite != null  and monitoringSite != ''"> and monitoring_site = #{monitoringSite}</if>
+            <if test="monitoringPersonnel != null  and monitoringPersonnel != ''"> and monitoring_personnel = #{monitoringPersonnel}</if>
+            <if test="monitoringDate != null "> and monitoring_date = #{monitoringDate}</if>
+            <if test="monitoringEquipment != null  and monitoringEquipment != ''"> and monitoring_equipment = #{monitoringEquipment}</if>
+            <if test="repairIndex != null  and repairIndex != ''"> and repair_index = #{repairIndex}</if>
+            <if test="ownershipUnit != null  and ownershipUnit != ''"> and ownership_unit = #{ownershipUnit}</if>
+            <if test="maintenanceIndex != null  and maintenanceIndex != ''"> and maintenance_index = #{maintenanceIndex}</if>
+            <if test="pointValue != null  and pointValue != ''"> and point_value = #{pointValue}</if>
+            <if test="distance != null "> and distance = #{distance}</if>
+            <if test="defectNameCode != null  and defectNameCode != ''"> and defect_name_code = #{defectNameCode}</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="defectDescribe != null  and defectDescribe != ''"> and defect_describe = #{defectDescribe}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+        </where>
+    </select>
+    
+    <select id="selectHealthMonitorById" parameterType="Long" resultMap="HealthMonitorResult">
+        <include refid="selectHealthMonitorVo"/>
+        where health_monitor_id = #{healthMonitorId}
+    </select>
+        
+    <insert id="insertHealthMonitor" parameterType="HealthMonitor">
+        insert into health_monitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="healthMonitorId != null ">health_monitor_id,</if>
+            <if test="pointTreeId != null ">point_tree_id,</if>
+            <if test="tubeDiameter != null  and tubeDiameter != ''">tube_diameter,</if>
+            <if test="tubeLength != null ">tube_length,</if>
+            <if test="tubeType != null  and tubeType != ''">tube_type,</if>
+            <if test="inspect != null  and inspect != ''">inspect,</if>
+            <if test="crawlingLength != null ">crawling_length,</if>
+            <if test="tubeMaterial != null  and tubeMaterial != ''">tube_material,</if>
+            <if test="ancillaryFacilities != null  and ancillaryFacilities != ''">ancillary_facilities,</if>
+            <if test="videoFile != null  and videoFile != ''">video_file,</if>
+            <if test="monitoringSite != null  and monitoringSite != ''">monitoring_site,</if>
+            <if test="monitoringPersonnel != null  and monitoringPersonnel != ''">monitoring_personnel,</if>
+            <if test="monitoringDate != null ">monitoring_date,</if>
+            <if test="monitoringEquipment != null  and monitoringEquipment != ''">monitoring_equipment,</if>
+            <if test="repairIndex != null  and repairIndex != ''">repair_index,</if>
+            <if test="ownershipUnit != null  and ownershipUnit != ''">ownership_unit,</if>
+            <if test="maintenanceIndex != null  and maintenanceIndex != ''">maintenance_index,</if>
+            <if test="pointValue != null  and pointValue != ''">point_value,</if>
+            <if test="distance != null ">distance,</if>
+            <if test="defectNameCode != null  and defectNameCode != ''">defect_name_code,</if>
+            <if test="grade != null  and grade != ''">grade,</if>
+            <if test="defectDescribe != null  and defectDescribe != ''">defect_describe,</if>
+            <if test="img != null  and img != ''">img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="healthMonitorId != null ">#{healthMonitorId},</if>
+            <if test="pointTreeId != null ">#{pointTreeId},</if>
+            <if test="tubeDiameter != null  and tubeDiameter != ''">#{tubeDiameter},</if>
+            <if test="tubeLength != null ">#{tubeLength},</if>
+            <if test="tubeType != null  and tubeType != ''">#{tubeType},</if>
+            <if test="inspect != null  and inspect != ''">#{inspect},</if>
+            <if test="crawlingLength != null ">#{crawlingLength},</if>
+            <if test="tubeMaterial != null  and tubeMaterial != ''">#{tubeMaterial},</if>
+            <if test="ancillaryFacilities != null  and ancillaryFacilities != ''">#{ancillaryFacilities},</if>
+            <if test="videoFile != null  and videoFile != ''">#{videoFile},</if>
+            <if test="monitoringSite != null  and monitoringSite != ''">#{monitoringSite},</if>
+            <if test="monitoringPersonnel != null  and monitoringPersonnel != ''">#{monitoringPersonnel},</if>
+            <if test="monitoringDate != null ">#{monitoringDate},</if>
+            <if test="monitoringEquipment != null  and monitoringEquipment != ''">#{monitoringEquipment},</if>
+            <if test="repairIndex != null  and repairIndex != ''">#{repairIndex},</if>
+            <if test="ownershipUnit != null  and ownershipUnit != ''">#{ownershipUnit},</if>
+            <if test="maintenanceIndex != null  and maintenanceIndex != ''">#{maintenanceIndex},</if>
+            <if test="pointValue != null  and pointValue != ''">#{pointValue},</if>
+            <if test="distance != null ">#{distance},</if>
+            <if test="defectNameCode != null  and defectNameCode != ''">#{defectNameCode},</if>
+            <if test="grade != null  and grade != ''">#{grade},</if>
+            <if test="defectDescribe != null  and defectDescribe != ''">#{defectDescribe},</if>
+            <if test="img != null  and img != ''">#{img},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHealthMonitor" parameterType="HealthMonitor">
+        update health_monitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pointTreeId != null ">point_tree_id = #{pointTreeId},</if>
+            <if test="tubeDiameter != null  and tubeDiameter != ''">tube_diameter = #{tubeDiameter},</if>
+            <if test="tubeLength != null ">tube_length = #{tubeLength},</if>
+            <if test="tubeType != null  and tubeType != ''">tube_type = #{tubeType},</if>
+            <if test="inspect != null  and inspect != ''">inspect = #{inspect},</if>
+            <if test="crawlingLength != null ">crawling_length = #{crawlingLength},</if>
+            <if test="tubeMaterial != null  and tubeMaterial != ''">tube_material = #{tubeMaterial},</if>
+            <if test="ancillaryFacilities != null  and ancillaryFacilities != ''">ancillary_facilities = #{ancillaryFacilities},</if>
+            <if test="videoFile != null  and videoFile != ''">video_file = #{videoFile},</if>
+            <if test="monitoringSite != null  and monitoringSite != ''">monitoring_site = #{monitoringSite},</if>
+            <if test="monitoringPersonnel != null  and monitoringPersonnel != ''">monitoring_personnel = #{monitoringPersonnel},</if>
+            <if test="monitoringDate != null ">monitoring_date = #{monitoringDate},</if>
+            <if test="monitoringEquipment != null  and monitoringEquipment != ''">monitoring_equipment = #{monitoringEquipment},</if>
+            <if test="repairIndex != null  and repairIndex != ''">repair_index = #{repairIndex},</if>
+            <if test="ownershipUnit != null  and ownershipUnit != ''">ownership_unit = #{ownershipUnit},</if>
+            <if test="maintenanceIndex != null  and maintenanceIndex != ''">maintenance_index = #{maintenanceIndex},</if>
+            <if test="pointValue != null  and pointValue != ''">point_value = #{pointValue},</if>
+            <if test="distance != null ">distance = #{distance},</if>
+            <if test="defectNameCode != null  and defectNameCode != ''">defect_name_code = #{defectNameCode},</if>
+            <if test="grade != null  and grade != ''">grade = #{grade},</if>
+            <if test="defectDescribe != null  and defectDescribe != ''">defect_describe = #{defectDescribe},</if>
+            <if test="img != null  and img != ''">img = #{img},</if>
+        </trim>
+        where health_monitor_id = #{healthMonitorId}
+    </update>
+
+    <delete id="deleteHealthMonitorById" parameterType="Long">
+        delete from health_monitor where health_monitor_id = #{healthMonitorId}
+    </delete>
+
+    <delete id="deleteHealthMonitorByIds" parameterType="String">
+        delete from health_monitor where health_monitor_id in 
+        <foreach item="healthMonitorId" collection="array" open="(" separator="," close=")">
+            #{healthMonitorId}
+        </foreach>
+    </delete>
+    
+</mapper>

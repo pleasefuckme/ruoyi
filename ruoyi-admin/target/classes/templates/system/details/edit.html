@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改点位详情')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-details-edit" th:object="${pointDetails}">
+            <input name="pointDetailsId" th:field="*{pointDetailsId}" type="hidden">
+    <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">点位树：</label>
+                <div class="col-sm-8" th:if="${not #lists.isEmpty(pointTree2List)}">
+                    <select name="pointTreeId" class="form-control m-b">
+                        <option th:each="pointTree2 : ${pointTree2List}" th:text="${pointTree2.pointName}" th:value="${pointTree2.pointTreeId}"></option>
+                    </select>
+                </div>
+            </div>
+    </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">点位：</label>
+                <div class="col-sm-8">
+                    <input name="point" th:field="*{point}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">井盖尺寸：</label>
+                <div class="col-sm-8">
+                    <input name="capSize" th:field="*{capSize}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">图上点号：</label>
+                <div class="col-sm-8">
+                    <input name="imgNum" th:field="*{imgNum}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井盖材质：</label>
+                <div class="col-sm-8">
+                    <input name="capMaterial" th:field="*{capMaterial}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">图幅号：</label>
+                <div class="col-sm-8">
+                    <input name="sheetNum" th:field="*{sheetNum}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井材质：</label>
+                <div class="col-sm-8">
+                    <input name="wellMaterial" th:field="*{wellMaterial}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">特征：</label>
+                <div class="col-sm-8">
+                    <input name="feature" th:field="*{feature}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井深：</label>
+                <div class="col-sm-8">
+                    <input name="wellDepth" th:field="*{wellDepth}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">附属物：</label>
+                <div class="col-sm-8">
+                    <input name="appendages" th:field="*{appendages}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井尺寸：</label>
+                <div class="col-sm-8">
+                    <input name="wellSize" th:field="*{wellSize}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">地面高度：</label>
+                <div class="col-sm-8">
+                    <input name="groundHeight" th:field="*{groundHeight}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">所在街道：</label>
+                <div class="col-sm-8">
+                    <input name="street" th:field="*{street}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">要素编码：</label>
+                <div class="col-sm-8">
+                    <input name="elementCode" th:field="*{elementCode}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">埋没年代：</label>
+                <div class="col-sm-8">
+                    <input name="lostYear" th:field="*{lostYear}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">x坐标：</label>
+                <div class="col-sm-8">
+                    <input name="xIntercept" th:field="*{xIntercept}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">y坐标：</label>
+                <div class="col-sm-8">
+                    <input name="yIntercept" th:field="*{yIntercept}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">探测日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="probeDate" th:value="${#dates.format(pointDetails.probeDate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">符号角度：</label>
+                <div class="col-sm-8">
+                    <input name="symbolicAngle" th:field="*{symbolicAngle}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">探测单位：</label>
+                <div class="col-sm-8">
+                    <input name="probeUnit" th:field="*{probeUnit}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井底深：</label>
+                <div class="col-sm-8">
+                    <input name="wellBottomDepth" th:field="*{wellBottomDepth}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">监测单位：</label>
+                <div class="col-sm-8">
+                    <input name="monitoringUnit" th:field="*{monitoringUnit}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">偏心井位：</label>
+                <div class="col-sm-8">
+                    <input name="deviateCenterWellLocation" th:field="*{deviateCenterWellLocation}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <input name="state" th:field="*{state}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">井盖形状：</label>
+                <div class="col-sm-8">
+                    <input name="capShape" th:field="*{capShape}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remarks" th:field="*{remarks}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">设计图：</label>
+                <div class="col-sm-8">
+                    <input name="designImg" th:field="*{designImg}" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        $(function () {
+            // jQuery.validator.addMethod("isAllNumber", function (value, element) {
+            //     var capSize = $("#capSize").val();
+            //     var patrn = /^[0-9]*$/;
+            //     if (patrn.test(capSize)) {
+            //         return false;
+            //     } else {
+            //         return true;
+            //     }
+            // }, "用户名不能为纯数字");
+            $("#form-details-edit").validate({
+                rules: {
+                    point: {
+                        required: true,
+                    },
+                    capSize: {
+                        required: true,
+                        number: true,
+                        // minlength: 2,
+                        // maxlength: 5,
+                        // 自定义属性 属性名要和上方的一参一样
+                        // isAllNumber: true,
+
+                    },
+                    imgNum: {
+                        required: true,
+                    },
+                    capMaterial: {
+                        required: true,
+                    },
+                    sheetNum: {
+                        required: true,
+                    },
+                    wellMaterial: {
+                        required: true,
+                    },
+                    feature: {
+                        required: true,
+                    },
+                    wellDepth: {
+                        number:true,
+                        required: true,
+                    },
+                    appendages: {
+                        required: true,
+                    },
+                    wellSize: {
+                        number:true,
+                        required: true,
+                    },
+                    groundHeight: {
+                        number:true,
+                        required: true,
+                    },
+                    street: {
+                        required: true,
+                    },
+                    elementCode: {
+                        required: true,
+                    },
+                    lostYear: {
+                        required: true,
+                    },
+                    xIntercept: {
+                        required: true,
+                    },
+                    yIntercept: {
+                        required: true,
+                    },
+                    probeDate: {
+                        required: true,
+                    },
+                    symbolicAngle: {
+                        required: true,
+                    },
+                    probeUnit: {
+                        required: true,
+                    },
+                    wellBottomDepth: {
+                        number:true,
+                        required: true,
+                    },
+                    monitoringUnit: {
+                        required: true,
+                    },
+                    deviateCenterWellLocation: {
+                        required: true,
+                    },
+                    state: {
+                        required: true,
+                    },
+                    capShape: {
+                        required: true,
+                    },
+                    // remarks: {
+                    //     required: true,
+                    // },
+                    designImg: {
+                        required: true,
+                    },
+                }
+            });
+
+        });
+        var prefix = ctx + "system/details";
+        // $("#form-details-edit").validate({
+        //     focusCleanup: true
+        // });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-details-edit').serialize());
+            }
+        }
+
+        $("input[name='probeDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

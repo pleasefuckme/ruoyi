@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增视频文档')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-doc-add">
+    <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">点位：</label>
+                <div class="col-sm-8" th:if="${not #lists.isEmpty(pointTree2List)}">
+                    <select name="pointTreeId" class="form-control m-b">
+                        <option th:each="pointTree2 : ${pointTree2List}" th:text="${pointTree2.pointName}" th:value="${pointTree2.pointTreeId}"></option>
+                    </select>
+<!--                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>-->
+                </div>
+            </div>
+    </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">文件类型：</label>
+                <div class="col-sm-8">
+                    <select name="fileType" class="form-control m-b" th:with="type=${@dict.getType('sys_filetype')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">    
+                <label class="col-sm-4 control-label">文件上传：</label>
+                <div class="col-sm-8">
+                    <input name="fileUpload" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remark" class="form-control" type="text">
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        $("#form-doc-add").validate({
+            rules: {
+                fileUpload: {
+                    required: true,
+                    // minlength: 2,
+                    // maxlength: 5,
+                    // 自定义属性 属性名要和上方的一参一样
+                    // isAllNumber: true,
+
+                },
+                // remark: {
+                //     required: true,
+                //     // minlength: 2,
+                //     // maxlength: 5,
+                //     // 自定义属性 属性名要和上方的一参一样
+                //     // isAllNumber: true,
+                //
+                // }
+            }
+        });
+        var prefix = ctx + "system/doc"
+        // $("#form-doc-add").validate({
+        //     focusCleanup: true
+        // });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-doc-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

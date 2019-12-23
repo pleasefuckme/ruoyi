@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PointTree2Mapper">
+    
+    <resultMap type="PointTree2" id="PointTree2Result">
+        <result property="pointTreeId"    column="point_tree_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="pointName"    column="point_name"    />
+        <result property="parentName" column="parent_name" />
+    </resultMap>
+
+    <sql id="selectPointTree2Vo">
+        select point_tree_id, parent_id, ancestors, point_name from point_tree2
+    </sql>
+
+
+<!--    <resultMap type="PointTree2" id="selectLeaf1">-->
+<!--        <result property="pointTreeId"    column="point_tree_id"    />-->
+<!--        <result property="parentId"    column="parent_id"    />-->
+<!--        <result property="ancestors"    column="ancestors"    />-->
+<!--        <result property="pointName"    column="point_name"    />-->
+<!--        <result property="parentName" column="parent_name" />-->
+<!--        <collection property="PointTree2" select="selectLeaf2" ofType="PointTree2"-->
+<!--                    javaType="java.util.ArrayList">-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+    <select id="selectLeaf" resultMap="PointTree2Result">
+        select a.point_tree_id,a.point_name from point_tree2 a
+         <where>
+             a.point_tree_id not in( select DISTINCT a.point_tree_id
+             from point_tree2 a INNER JOIN point_tree2 b on a.point_tree_id = b.parent_id
+             )
+         </where>
+    </select>
+
+<!--    <select id="selectLeaf2" resultMap="PointTree2Result">-->
+<!--       -->
+<!--    </select>-->
+
+    <select id="selectPointTree2List" parameterType="PointTree2" resultMap="PointTree2Result">
+        <include refid="selectPointTree2Vo"/>
+        <where>  
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="ancestors != null  and ancestors != ''"> and ancestors = #{ancestors}</if>
+            <if test="pointName != null  and pointName != ''"> and point_name like concat('%', #{pointName}, '%')</if>
+        </where>
+        order by parent_id
+    </select>
+    
+    <select id="selectPointTree2ById" parameterType="Long" resultMap="PointTree2Result">
+        select t.point_tree_id, t.parent_id, t.ancestors, t.point_name, p.point_name as parent_name
+        from point_tree2 t
+        left join point_tree2 p on p.point_tree_id = t.parent_id
+        where t.point_tree_id = #{pointTreeId}
+    </select>
+        
+    <insert id="insertPointTree2" parameterType="PointTree2">
+        insert into point_tree2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pointTreeId != null ">point_tree_id,</if>
+            <if test="parentId != null ">parent_id,</if>
+            <if test="ancestors != null  and ancestors != ''">ancestors,</if>
+            <if test="pointName != null  and pointName != ''">point_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pointTreeId != null ">#{pointTreeId},</if>
+            <if test="parentId != null ">#{parentId},</if>
+            <if test="ancestors != null  and ancestors != ''">#{ancestors},</if>
+            <if test="pointName != null  and pointName != ''">#{pointName},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePointTree2" parameterType="PointTree2">
+        update point_tree2
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null ">parent_id = #{parentId},</if>
+            <if test="ancestors != null  and ancestors != ''">ancestors = #{ancestors},</if>
+            <if test="pointName != null  and pointName != ''">point_name = #{pointName},</if>
+        </trim>
+        where point_tree_id = #{pointTreeId}
+    </update>
+
+    <delete id="deletePointTree2ById" parameterType="Long">
+        delete from point_tree2 where point_tree_id = #{pointTreeId}
+    </delete>
+
+    <delete id="deletePointTree2ByIds" parameterType="String">
+        delete from point_tree2 where point_tree_id in 
+        <foreach item="pointTreeId" collection="array" open="(" separator="," close=")">
+            #{pointTreeId}
+        </foreach>
+    </delete>
+    
+</mapper>

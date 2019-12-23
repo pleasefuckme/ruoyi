@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PointDetailsMapper">
+    
+    <resultMap type="QueryVo" id="PointDetailsResult">
+        <result property="pointDetailsId"    column="point_details_id"    />
+        <result property="pointName"    column="point_name"    />
+        <result property="point"    column="point"    />
+        <result property="capSize"    column="cap_size"    />
+        <result property="imgNum"    column="img_num"    />
+        <result property="capMaterial"    column="cap_material"    />
+        <result property="sheetNum"    column="sheet_num"    />
+        <result property="wellMaterial"    column="well_material"    />
+        <result property="feature"    column="feature"    />
+        <result property="wellDepth"    column="well_depth"    />
+        <result property="appendages"    column="appendages"    />
+        <result property="wellSize"    column="well_size"    />
+        <result property="groundHeight"    column="ground_height"    />
+        <result property="street"    column="street"    />
+        <result property="elementCode"    column="element_code"    />
+        <result property="lostYear"    column="lost_year"    />
+        <result property="xIntercept"    column="x_intercept"    />
+        <result property="yIntercept"    column="y_intercept"    />
+        <result property="probeDate"    column="probe_date"    />
+        <result property="symbolicAngle"    column="symbolic_angle"    />
+        <result property="probeUnit"    column="probe_unit"    />
+        <result property="wellBottomDepth"    column="well_bottom_depth"    />
+        <result property="monitoringUnit"    column="monitoring_unit"    />
+        <result property="deviateCenterWellLocation"    column="deviate_center_well_location"    />
+        <result property="state"    column="state"    />
+        <result property="capShape"    column="cap_shape"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="designImg"    column="design_img"    />
+    </resultMap>
+<!--    手写接口开始-->
+    <resultMap type="PointTreeDetailVo" id="PointDetailsResult2">
+        <result property="pointTreeId"    column="point_tree_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="pointName"    column="point_name"    />
+        <result property="pointDetailsId"    column="point_details_id"    />
+        <result property="point"    column="point"    />
+    </resultMap>
+
+    <!--    信息浏览之树表信息-->
+    <select id="selectPointTreeDetail"  resultMap="PointDetailsResult2">
+        SELECT a.point_tree_id , a.parent_id ,a.point_name, b.point_details_id,b.point
+        FROM point_tree2 a
+        LEFT JOIN point_details b
+        ON a.point_tree_id=b.point_tree_id
+    </select>
+
+
+
+
+
+
+<!--    手写接口结束-->
+
+
+
+
+
+    <sql id="selectPointDetailsVo">
+        select point_details_id, point_tree_id,point, cap_size, img_num, cap_material, sheet_num, well_material, feature, well_depth, appendages, well_size, ground_height, street, element_code, lost_year, x_intercept, y_intercept, probe_date, symbolic_angle, probe_unit, well_bottom_depth, monitoring_unit, deviate_center_well_location, state, cap_shape, remarks, design_img from point_details
+    </sql>
+
+    <select id="selectPointDetailsList" parameterType="PointDetails" resultMap="PointDetailsResult">
+        select point_details_id, point_name ,point,
+        cap_size, img_num, cap_material, sheet_num, well_material,
+        feature, well_depth, appendages, well_size, ground_height, street,
+        element_code, lost_year, x_intercept, y_intercept, probe_date, symbolic_angle,
+        probe_unit, well_bottom_depth, monitoring_unit, deviate_center_well_location, state, cap_shape, remarks, design_img
+        from point_details a, point_tree2 b
+        <where>
+            a.point_tree_id=b.point_tree_id
+            <if test="pointTreeId != null and pointTreeId != ''"> and a.point_tree_id = #{pointTreeId}</if>
+            <if test="point != null and point != ''"> and a.point = #{point}</if>
+            <if test="capSize != null and capSize != ''"> and a.cap_size = #{capSize}</if>
+            <if test="imgNum != null  and imgNum != ''"> and a.img_num = #{imgNum}</if>
+            <if test="capMaterial != null  and capMaterial != ''"> and a.cap_material = #{capMaterial}</if>
+            <if test="sheetNum != null  and sheetNum != ''"> and a.sheet_num = #{sheetNum}</if>
+            <if test="wellMaterial != null  and wellMaterial != ''"> and a.well_material = #{wellMaterial}</if>
+            <if test="feature != null  and feature != ''"> and a.feature = #{feature}</if>
+            <if test="wellDepth != null  and wellDepth != ''"> and a.well_depth = #{wellDepth}</if>
+            <if test="appendages != null  and appendages != ''"> and a.appendages = #{appendages}</if>
+            <if test="wellSize != null  and wellSize != ''"> and a.well_size = #{wellSize}</if>
+            <if test="groundHeight != null "> and a.ground_height = #{groundHeight}</if>
+            <if test="street != null  and street != ''"> and a.street = #{street}</if>
+            <if test="elementCode != null  and elementCode != ''"> and a.element_code = #{elementCode}</if>
+            <if test="lostYear != null  and lostYear != ''"> and a.lost_year = #{lostYear}</if>
+            <if test="xIntercept != null  and xIntercept != ''"> and a.x_intercept = #{xIntercept}</if>
+            <if test="yIntercept != null  and yIntercept != ''"> and a.y_intercept = #{yIntercept}</if>
+            <if test="probeDate != null "> and a.probe_date = #{probeDate}</if>
+            <if test="symbolicAngle != null  and symbolicAngle != ''"> and a.symbolic_angle = #{symbolicAngle}</if>
+            <if test="probeUnit != null  and probeUnit != ''"> and a.probe_unit = #{probeUnit}</if>
+            <if test="wellBottomDepth != null  and wellBottomDepth != ''"> and a.well_bottom_depth = #{wellBottomDepth}</if>
+            <if test="monitoringUnit != null  and monitoringUnit != ''"> and a.monitoring_unit = #{monitoringUnit}</if>
+            <if test="deviateCenterWellLocation != null  and deviateCenterWellLocation != ''"> and a.deviate_center_well_location = #{deviateCenterWellLocation}</if>
+            <if test="state != null  and state != ''"> and a.state = #{state}</if>
+            <if test="capShape != null  and capShape != ''"> and a.cap_shape = #{capShape}</if>
+            <if test="remarks != null  and remarks != ''"> and a.remarks = #{remarks}</if>
+            <if test="designImg != null  and designImg != ''"> and a.design_img = #{designImg}</if>
+        </where>
+    </select>
+    
+    <select id="selectPointDetailsById" parameterType="Long" resultMap="PointDetailsResult">
+        <include refid="selectPointDetailsVo"/>
+        where point_details_id = #{pointDetailsId}
+    </select>
+        
+    <insert id="insertPointDetails" parameterType="PointDetails">
+        insert into point_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pointDetailsId != null and pointDetailsId != '' ">point_details_id,</if>
+            <if test="pointTreeId != null and pointTreeId != '' ">point_tree_id,</if>
+            <if test="point != '' and point != null">point,</if>
+            <if test="capSize != null ">cap_size,</if>
+            <if test="imgNum != null  and imgNum != ''">img_num,</if>
+            <if test="capMaterial != null  and capMaterial != ''">cap_material,</if>
+            <if test="sheetNum != null  and sheetNum != ''">sheet_num,</if>
+            <if test="wellMaterial != null  and wellMaterial != ''">well_material,</if>
+            <if test="feature != null  and feature != ''">feature,</if>
+            <if test="wellDepth != null  and wellDepth != ''">well_depth,</if>
+            <if test="appendages != null  and appendages != ''">appendages,</if>
+            <if test="wellSize != null  and wellSize != ''">well_size,</if>
+            <if test="groundHeight != null ">ground_height,</if>
+            <if test="street != null  and street != ''">street,</if>
+            <if test="elementCode != null  and elementCode != ''">element_code,</if>
+            <if test="lostYear != null  and lostYear != ''">lost_year,</if>
+            <if test="xIntercept != null  and xIntercept != ''">x_intercept,</if>
+            <if test="yIntercept != null  and yIntercept != ''">y_intercept,</if>
+            <if test="probeDate != null ">probe_date,</if>
+            <if test="symbolicAngle != null  and symbolicAngle != ''">symbolic_angle,</if>
+            <if test="probeUnit != null  and probeUnit != ''">probe_unit,</if>
+            <if test="wellBottomDepth != null  and wellBottomDepth != ''">well_bottom_depth,</if>
+            <if test="monitoringUnit != null  and monitoringUnit != ''">monitoring_unit,</if>
+            <if test="deviateCenterWellLocation != null  and deviateCenterWellLocation != ''">deviate_center_well_location,</if>
+            <if test="state != null  and state != ''">state,</if>
+            <if test="capShape != null  and capShape != ''">cap_shape,</if>
+            <if test="remarks != null  and remarks != ''">remarks,</if>
+            <if test="designImg != null  and designImg != ''">design_img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pointDetailsId != null ">#{pointDetailsId},</if>
+            <if test="pointTreeId != null ">#{pointTreeId},</if>
+            <if test="point != '' ">#{point},</if>
+            <if test="capSize != null ">#{capSize},</if>
+            <if test="imgNum != null  and imgNum != ''">#{imgNum},</if>
+            <if test="capMaterial != null  and capMaterial != ''">#{capMaterial},</if>
+            <if test="sheetNum != null  and sheetNum != ''">#{sheetNum},</if>
+            <if test="wellMaterial != null  and wellMaterial != ''">#{wellMaterial},</if>
+            <if test="feature != null  and feature != ''">#{feature},</if>
+            <if test="wellDepth != null  and wellDepth != ''">#{wellDepth},</if>
+            <if test="appendages != null  and appendages != ''">#{appendages},</if>
+            <if test="wellSize != null  and wellSize != ''">#{wellSize},</if>
+            <if test="groundHeight != null ">#{groundHeight},</if>
+            <if test="street != null  and street != ''">#{street},</if>
+            <if test="elementCode != null  and elementCode != ''">#{elementCode},</if>
+            <if test="lostYear != null  and lostYear != ''">#{lostYear},</if>
+            <if test="xIntercept != null  and xIntercept != ''">#{xIntercept},</if>
+            <if test="yIntercept != null  and yIntercept != ''">#{yIntercept},</if>
+            <if test="probeDate != null ">#{probeDate},</if>
+            <if test="symbolicAngle != null  and symbolicAngle != ''">#{symbolicAngle},</if>
+            <if test="probeUnit != null  and probeUnit != ''">#{probeUnit},</if>
+            <if test="wellBottomDepth != null  and wellBottomDepth != ''">#{wellBottomDepth},</if>
+            <if test="monitoringUnit != null  and monitoringUnit != ''">#{monitoringUnit},</if>
+            <if test="deviateCenterWellLocation != null  and deviateCenterWellLocation != ''">#{deviateCenterWellLocation},</if>
+            <if test="state != null  and state != ''">#{state},</if>
+            <if test="capShape != null  and capShape != ''">#{capShape},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+            <if test="designImg != null  and designImg != ''">#{designImg},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePointDetails" parameterType="PointDetails">
+        update point_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pointTreeId != null ">point_tree_id = #{pointTreeId},</if>
+            <if test="point != '' ">point = #{point},</if>
+            <if test="capSize != null ">cap_size = #{capSize},</if>
+            <if test="imgNum != null  and imgNum != ''">img_num = #{imgNum},</if>
+            <if test="capMaterial != null  and capMaterial != ''">cap_material = #{capMaterial},</if>
+            <if test="sheetNum != null  and sheetNum != ''">sheet_num = #{sheetNum},</if>
+            <if test="wellMaterial != null  and wellMaterial != ''">well_material = #{wellMaterial},</if>
+            <if test="feature != null  and feature != ''">feature = #{feature},</if>
+            <if test="wellDepth != null  and wellDepth != ''">well_depth = #{wellDepth},</if>
+            <if test="appendages != null  and appendages != ''">appendages = #{appendages},</if>
+            <if test="wellSize != null  and wellSize != ''">well_size = #{wellSize},</if>
+            <if test="groundHeight != null ">ground_height = #{groundHeight},</if>
+            <if test="street != null  and street != ''">street = #{street},</if>
+            <if test="elementCode != null  and elementCode != ''">element_code = #{elementCode},</if>
+            <if test="lostYear != null  and lostYear != ''">lost_year = #{lostYear},</if>
+            <if test="xIntercept != null  and xIntercept != ''">x_intercept = #{xIntercept},</if>
+            <if test="yIntercept != null  and yIntercept != ''">y_intercept = #{yIntercept},</if>
+            <if test="probeDate != null ">probe_date = #{probeDate},</if>
+            <if test="symbolicAngle != null  and symbolicAngle != ''">symbolic_angle = #{symbolicAngle},</if>
+            <if test="probeUnit != null  and probeUnit != ''">probe_unit = #{probeUnit},</if>
+            <if test="wellBottomDepth != null  and wellBottomDepth != ''">well_bottom_depth = #{wellBottomDepth},</if>
+            <if test="monitoringUnit != null  and monitoringUnit != ''">monitoring_unit = #{monitoringUnit},</if>
+            <if test="deviateCenterWellLocation != null  and deviateCenterWellLocation != ''">deviate_center_well_location = #{deviateCenterWellLocation},</if>
+            <if test="state != null  and state != ''">state = #{state},</if>
+            <if test="capShape != null  and capShape != ''">cap_shape = #{capShape},</if>
+            <if test="remarks != null  and remarks != ''">remarks = #{remarks},</if>
+            <if test="designImg != null  and designImg != ''">design_img = #{designImg},</if>
+        </trim>
+        where point_details_id = #{pointDetailsId}
+    </update>
+
+    <delete id="deletePointDetailsById" parameterType="Long">
+        delete from point_details where point_details_id = #{pointDetailsId}
+    </delete>
+
+    <delete id="deletePointDetailsByIds" parameterType="String">
+        delete from point_details where point_details_id in 
+        <foreach item="pointDetailsId" collection="array" open="(" separator="," close=")">
+            #{pointDetailsId}
+        </foreach>
+    </delete>
+    
+</mapper>
